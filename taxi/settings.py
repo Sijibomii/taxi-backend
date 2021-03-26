@@ -84,19 +84,29 @@ ASGI_APPLICATION = 'taxi.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-NAME= os.environ['PGDATABASE']
-USER= os.environ['PGUSER']
-PASSWORD= os.environ['PGPASSWORD']
-HOST= os.environ['PGHOST']
-PORT=os.environ['PORT']# i changed the port because I have postgres running on the same port 5432
+# NAME= os.environ['PGDATABASE']
+# USER= os.environ['PGUSER']
+# PASSWORD= os.environ['PGPASSWORD']
+# HOST= os.environ['PGHOST']
+# PORT=os.environ['PORT']# i changed the port because I have postgres running on the same port 5432
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME':NAME,
+#         'USER': USER,
+#         'PASSWORD': PASSWORD,
+#         'HOST': HOST,
+#         'PORT': PORT,
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':NAME,
-        'USER': USER,
-        'PASSWORD': PASSWORD,
-        'HOST': HOST,
-        'PORT': PORT,
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
 # DATABASES = {
